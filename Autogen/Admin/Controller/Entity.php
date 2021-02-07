@@ -83,7 +83,7 @@ abstract class Entity extends AbstractController
 
     /**
      * @param ParameterBag $params
-     * @return \XF\Mvc\Reply\View
+     * @return \XF\Mvc\Reply\AbstractReply
      * @throws \XF\Mvc\Reply\Exception
      */
     public function actionEdit(ParameterBag $params)
