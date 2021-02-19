@@ -9,7 +9,7 @@ use XF\Mvc\FormAction;
 use XF\Mvc\ParameterBag;
 
 /**
- * @version 2021022001
+ * @version 2021022002
  * @see \DevHelper\Autogen\Admin\Controller\Entity
  */
 abstract class Entity extends AbstractController
@@ -456,7 +456,9 @@ abstract class Entity extends AbstractController
 
         $getterColumns = [];
         foreach ($structure->getters as $getterKey => $getterCacheable) {
-            if (!$getterCacheable) {
+            if ((is_array($getterCacheable) && !$getterCacheable['cache'])
+                || !$getterCacheable
+            ) {
                 continue;
             }
 
