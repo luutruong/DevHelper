@@ -9,7 +9,7 @@ use XF\Mvc\FormAction;
 use XF\Mvc\ParameterBag;
 
 /**
- * @version 2020052301
+ * @version 2021022001
  * @see \DevHelper\Autogen\Admin\Controller\Entity
  */
 abstract class Entity extends AbstractController
@@ -485,11 +485,21 @@ abstract class Entity extends AbstractController
                 continue;
             }
 
+            $value = $entity->get($columnName);
+            if ($value instanceof \XF\Phrase) {
+                $value = $value->render('html', [
+                    // fix the issue when creating entity which used getter as phrase
+                    // in this case the phrase does not exists so the input are fill
+                    // with phrase title.
+                    'nameOnInvalid' => false,
+                ]);
+            }
+
             $columns[$columnName] = $metadata;
             $columns[$columnName] += [
                 '_structureData' => $column,
                 'name' => sprintf('values[%s]', $columnName),
-                'value' => $entity->get($columnName),
+                'value' => $value,
             ];
         }
 
