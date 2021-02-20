@@ -173,11 +173,15 @@ class AutoGen extends Command
         }
 
         $baseContents = preg_replace('/namespace .+;/', "namespace {$baseNamespace};", $baseContents);
+        if ($baseContents === null) {
+            throw new \LogicException('Invalid content in: ' . $basePathSource);
+        }
         $this->extractVersion($basePathPartial, $baseContents, $autoGen);
         if (!File::writeFile($basePathTarget, $baseContents, false)) {
             throw new \LogicException("Cannot copy {$basePathSource} -> {$basePathTarget}");
         }
 
+        /** @var mixed $controllerClass */
         foreach ($controllerClasses as $controllerClass) {
             $reflectionClass = new \ReflectionClass($controllerClass);
             if ($reflectionClass->isAbstract()) {
@@ -260,6 +264,12 @@ class AutoGen extends Command
         }
     }
 
+    /**
+     * @param array $autoGen
+     * @param AutogenContext $context
+     * @param AddOn $addOn
+     * @return void
+     */
     public function doSetupTrait(array &$autoGen, AutogenContext $context, AddOn $addOn)
     {
         $addOnId = $context->getAddOnId();
@@ -288,7 +298,7 @@ class AutoGen extends Command
             'XF\AddOn\StepRunnerUpgradeTrait',
             'XF\AddOn\StepRunnerUninstallTrait'
         ] as $traitName) {
-            if (in_array($traitName, $classUses)) {
+            if (in_array($traitName, $classUses, true)) {
                 $useInstallUpgradeTraits = true;
 
                 break;
@@ -304,7 +314,10 @@ class AutoGen extends Command
             throw new \LogicException('Invalid content in: ' . $basePathSource);
         }
 
-        $baseContents = preg_replace('/namespace .+;/', "namespace {$baseNamespace};", $baseContents);
+        $baseContents = preg_replace('/namespace .+;/', "namespace {$baseNamespace};", strval($baseContents));
+        if ($baseContents === null) {
+            throw new \LogicException('Invalid content in: ' . $basePathSource);
+        }
         $this->extractVersion($basePathPartial, $baseContents, $autoGen);
 
         if (!File::writeFile($basePathTarget, $baseContents, false)) {

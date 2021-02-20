@@ -876,6 +876,10 @@ abstract class Entity extends AbstractController
         $entityClass = get_class($entity);
         /** @var \ReflectionClass|null $rc */
         $rc = new \ReflectionClass($entityClass);
+        if ($rc === null) {
+            throw new \LogicException('$rc has gone away');
+        }
+
         while (true) {
             $parent = $rc->getParentClass();
             if ($parent === false || $parent->getName() === 'XF\Mvc\Entity\Entity' || $parent->isAbstract()) {
@@ -885,9 +889,7 @@ abstract class Entity extends AbstractController
             $rc = $parent;
             $entityClass = $rc->getName();
         }
-        if (!$rc) {
-            throw new \LogicException('$rc has gone away');
-        }
+
         $rcDocComment = $rc->getDocComment();
         if ($rcDocComment === false) {
             $entityClassAsArg = $entityClass;

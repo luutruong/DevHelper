@@ -6,6 +6,10 @@ use XF\Util\File;
 
 class JsMinifier extends XFCP_JsMinifier
 {
+    /**
+     * @param mixed $getErrors
+     * @return mixed
+     */
     protected function request($getErrors = false)
     {
         if (\is_executable('/usr/local/bin/uglifyjs')) {
@@ -28,7 +32,11 @@ class JsMinifier extends XFCP_JsMinifier
                 . ' -c -m';
             \exec($cmd);
 
-            $minified = \trim(\file_get_contents($output));
+            $contents = \file_get_contents($output);
+            if ($contents === false) {
+                throw new \RuntimeException('Failed to minify JS contents');
+            }
+            $minified = \trim($contents);
             if (\strlen($minified) === 0) {
                 \XF::logError('Failed to minify JS. CMD=' . $cmd);
             } else {
