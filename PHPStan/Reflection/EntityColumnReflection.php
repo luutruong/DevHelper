@@ -1,19 +1,21 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace DevHelper\PHPStan\Reflection;
 
+use PHPStan\Type\Type;
+use PHPStan\TrinaryLogic;
+use XF\Mvc\Entity\Entity;
+use PHPStan\Type\ArrayType;
+use PHPStan\Type\FloatType;
+use PHPStan\Type\MixedType;
+use PHPStan\Type\UnionType;
+use PHPStan\Type\StringType;
+use PHPStan\Type\BooleanType;
+use PHPStan\Type\IntegerType;
 use PHPStan\Reflection\ClassReflection;
 use PHPStan\Reflection\PropertyReflection;
-use PHPStan\TrinaryLogic;
-use PHPStan\Type\ArrayType;
-use PHPStan\Type\BooleanType;
-use PHPStan\Type\FloatType;
-use PHPStan\Type\IntegerType;
-use PHPStan\Type\MixedType;
-use PHPStan\Type\StringType;
-use PHPStan\Type\Type;
-use PHPStan\Type\UnionType;
-use XF\Mvc\Entity\Entity;
 
 class EntityColumnReflection implements PropertyReflection
 {

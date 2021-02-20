@@ -1,11 +1,13 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace DevHelper\PHPStan\Reflection;
 
+use PHPStan\Type\Type;
+use PHPStan\TrinaryLogic;
 use PHPStan\Reflection\ClassReflection;
 use PHPStan\Reflection\PropertyReflection;
-use PHPStan\TrinaryLogic;
-use PHPStan\Type\Type;
 
 class EntityGetterReflection implements PropertyReflection
 {

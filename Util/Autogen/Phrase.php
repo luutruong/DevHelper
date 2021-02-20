@@ -2,11 +2,11 @@
 
 namespace DevHelper\Util\Autogen;
 
-use DevHelper\Util\AutogenContext;
-use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Question\Question;
-use XF\Entity\Phrase as EntityPhrase;
 use XF\PrintableException;
+use DevHelper\Util\AutogenContext;
+use XF\Entity\Phrase as EntityPhrase;
+use Symfony\Component\Console\Question\Question;
+use Symfony\Component\Console\Output\OutputInterface;
 
 class Phrase
 {
@@ -29,6 +29,7 @@ class Phrase
                 "<info>Phrase #{$existing->phrase_id} {$existing->title} = {$existing->phrase_text} OK</info>",
                 OutputInterface::VERBOSITY_VERY_VERBOSE
             );
+
             return $existing;
         }
 

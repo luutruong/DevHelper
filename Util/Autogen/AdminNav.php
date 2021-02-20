@@ -2,11 +2,11 @@
 
 namespace DevHelper\Util\Autogen;
 
-use DevHelper\Util\AutogenContext;
-use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Question\Question;
-use XF\Entity\AdminNavigation;
 use XF\PrintableException;
+use XF\Entity\AdminNavigation;
+use DevHelper\Util\AutogenContext;
+use Symfony\Component\Console\Question\Question;
+use Symfony\Component\Console\Output\OutputInterface;
 
 class AdminNav
 {
@@ -28,6 +28,7 @@ class AdminNav
                 "<info>Admin navigation {$existing->navigation_id} OK</info>",
                 OutputInterface::VERBOSITY_VERY_VERBOSE
             );
+
             return $existing;
         }
 

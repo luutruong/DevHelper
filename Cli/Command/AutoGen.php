@@ -2,16 +2,16 @@
 
 namespace DevHelper\Cli\Command;
 
-use DevHelper\Util\Autogen\GitIgnore;
+use XF\Util\File;
+use XF\Util\Json;
+use XF\AddOn\AddOn;
 use DevHelper\Util\AutogenContext;
+use XF\Cli\Command\AddOnActionTrait;
+use DevHelper\Util\Autogen\GitIgnore;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use XF\AddOn\AddOn;
-use XF\Cli\Command\AddOnActionTrait;
-use XF\Util\File;
-use XF\Util\Json;
 
 class AutoGen extends Command
 {
@@ -225,6 +225,7 @@ class AutoGen extends Command
             foreach ($currentLines as $currentLine) {
                 if (in_array($currentLine, $lineDeletes, true)) {
                     $changed = true;
+
                     continue;
                 }
 
@@ -282,13 +283,14 @@ class AutoGen extends Command
         $classUses = array_values($classUses);
 
         $useInstallUpgradeTraits = false;
-        foreach([
+        foreach ([
             'XF\AddOn\StepRunnerInstallTrait',
             'XF\AddOn\StepRunnerUpgradeTrait',
             'XF\AddOn\StepRunnerUninstallTrait'
         ] as $traitName) {
             if (in_array($traitName, $classUses)) {
                 $useInstallUpgradeTraits = true;
+
                 break;
             }
         }
@@ -331,6 +333,7 @@ class AutoGen extends Command
         $addOn = $this->checkEditableAddOn($id, $error);
         if (!$addOn) {
             $output->writeln('<error>' . $error . '</error>');
+
             return 1;
         }
 
@@ -358,9 +361,9 @@ class AutoGen extends Command
                 throw new \LogicException("Cannot update {$autoGenPath}");
             }
 
-            $output->writeln("autogen@" . $autoGen[__CLASS__]['version_id']);
+            $output->writeln('autogen@' . $autoGen[__CLASS__]['version_id']);
         } else {
-            $output->writeln("autogen OK");
+            $output->writeln('autogen OK');
         }
 
         return 0;

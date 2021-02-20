@@ -1,14 +1,16 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace DevHelper\PHPStan\Type;
 
+use XF\Mvc\Entity\Structure;
+use PHPStan\Reflection\ClassReflection;
+use PHPStan\Reflection\PropertyReflection;
 use DevHelper\PHPStan\Reflection\EntityColumnReflection;
 use DevHelper\PHPStan\Reflection\EntityGetterReflection;
 use DevHelper\PHPStan\Reflection\EntityRelationReflection;
-use PHPStan\Reflection\ClassReflection;
 use PHPStan\Reflection\PropertiesClassReflectionExtension;
-use PHPStan\Reflection\PropertyReflection;
-use XF\Mvc\Entity\Structure;
 
 class Entity implements PropertiesClassReflectionExtension
 {
@@ -57,6 +59,7 @@ class Entity implements PropertiesClassReflectionExtension
 
             if ($classReflection->hasNativeMethod($methodName)) {
                 $method = $classReflection->getNativeMethod($methodName);
+
                 return new EntityGetterReflection(
                     $classReflection,
                     $method->getVariants()[0]->getReturnType(),
@@ -67,11 +70,13 @@ class Entity implements PropertiesClassReflectionExtension
 
         if (isset($structure->columns[$propertyName])) {
             $column = $structure->columns[$propertyName];
+
             return new EntityColumnReflection($classReflection, $column['type']);
         }
 
         if (isset($structure->relations[$propertyName])) {
             $relation = $structure->relations[$propertyName];
+
             return new EntityRelationReflection($classReflection, $relation['type'], $relation['entity']);
         }
 
@@ -79,6 +84,7 @@ class Entity implements PropertiesClassReflectionExtension
             $propertyNameWithoutDash = substr($propertyName, 0, -1);
             if (isset($structure->columns[$propertyNameWithoutDash])) {
                 $column = $structure->columns[$propertyNameWithoutDash];
+
                 return new EntityColumnReflection($classReflection, $column['type']);
             }
         }

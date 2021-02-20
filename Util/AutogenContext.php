@@ -2,16 +2,16 @@
 
 namespace DevHelper\Util;
 
-use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Helper\QuestionHelper;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Question\Question;
-use XF\AddOn\AddOn;
 use XF\App;
+use XF\AddOn\AddOn;
 use XF\Mvc\Controller;
 use XF\Mvc\Entity\Entity;
 use XF\Mvc\Entity\Finder;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Question\Question;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Helper\QuestionHelper;
+use Symfony\Component\Console\Output\OutputInterface;
 
 class AutogenContext
 {
@@ -84,6 +84,7 @@ class AutogenContext
     {
         /** @var QuestionHelper $helper */
         $helper = $this->command->getHelper('question');
+
         return $helper->ask($this->input, $this->output, $question);
     }
 
@@ -109,6 +110,7 @@ class AutogenContext
         }
 
         call_user_func($f, $this);
+
         return true;
     }
 

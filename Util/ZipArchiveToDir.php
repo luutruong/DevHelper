@@ -74,6 +74,7 @@ class ZipArchiveToDir
     protected function getPath($name)
     {
         $ds = DIRECTORY_SEPARATOR;
+
         return $this->dir . $ds . ltrim($name, $ds);
     }
 }

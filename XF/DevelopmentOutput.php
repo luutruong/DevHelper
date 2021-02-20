@@ -20,6 +20,7 @@ class DevelopmentOutput extends XFCP_DevelopmentOutput
             $addOnIds = array_filter($addOnIds, function ($id) {
                 return $id !== 'XF';
             });
+
             return $addOnIds;
         }
 

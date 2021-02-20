@@ -2,12 +2,12 @@
 
 namespace DevHelper\Cli\Command;
 
+use XF\AddOn\AddOn;
+use XF\Cli\Command\AddOnActionTrait;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use XF\AddOn\AddOn;
-use XF\Cli\Command\AddOnActionTrait;
 
 class AutoCheck extends Command
 {
@@ -27,14 +27,16 @@ class AutoCheck extends Command
 
         $includedJs = false;
         $includedStyles = false;
-        foreach ((array)$additionalFiles as $additionalFile) {
+        foreach ((array) $additionalFiles as $additionalFile) {
             if ($additionalFile === $filesJsPath) {
                 $includedJs = true;
+
                 continue;
             }
 
             if ($additionalFile === $filesStylesPath) {
                 $includedStyles = true;
+
                 continue;
             }
         }
@@ -113,6 +115,7 @@ class AutoCheck extends Command
         $addOn = $this->checkEditableAddOn($id, $error);
         if (!$addOn) {
             $output->writeln('<error>' . $error . '</error>');
+
             return 1;
         }
 
@@ -121,7 +124,7 @@ class AutoCheck extends Command
         $result |= $this->checkPurchasables($addOn, $output);
 
         if ($result === 0) {
-            $output->writeln("autocheck OK");
+            $output->writeln('autocheck OK');
         }
 
         return $result;

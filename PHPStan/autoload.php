@@ -10,7 +10,7 @@ $appClass = 'XF\Pub\App';
 
 $srcPath = strval(getenv('DEVHELPER_PHPSTAN_SRC_PATH'));
 if (strlen($srcPath) === 0) {
-    echo("DEVHELPER_PHPSTAN_SRC_PATH is missing");
+    echo('DEVHELPER_PHPSTAN_SRC_PATH is missing');
     die(1);
 }
 $srcAutoloadPaths = [
@@ -57,6 +57,7 @@ spl_autoload_register(function ($class) use ($app) {
         foreach ($extensions as $extension) {
             if ($extension === $classWithoutPrefix) {
                 class_alias($base, $class);
+
                 return true;
             }
         }

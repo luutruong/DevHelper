@@ -2,11 +2,11 @@
 
 namespace DevHelper\Util\Autogen;
 
-use DevHelper\Util\AutogenContext;
-use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Question\Question;
 use XF\Entity\Route;
 use XF\PrintableException;
+use DevHelper\Util\AutogenContext;
+use Symfony\Component\Console\Question\Question;
+use Symfony\Component\Console\Output\OutputInterface;
 
 class AdminRoute
 {
@@ -31,6 +31,7 @@ class AdminRoute
                 "<info>Route #{$existing->route_id} {$existing->route_type}/{$existing->route_prefix} OK</info>",
                 OutputInterface::VERBOSITY_VERY_VERBOSE
             );
+
             return $existing;
         }
 

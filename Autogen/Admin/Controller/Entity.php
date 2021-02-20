@@ -2,11 +2,10 @@
 
 namespace DevHelper\Autogen\Admin\Controller;
 
-use XF\Admin\Controller\AbstractController;
-use XF\Mvc\Entity\Entity as MvcEntity;
-use XF\Mvc\Entity\Finder;
 use XF\Mvc\FormAction;
 use XF\Mvc\ParameterBag;
+use XF\Mvc\Entity\Entity as MvcEntity;
+use XF\Admin\Controller\AbstractController;
 
 /**
  * @version 2021022002
@@ -94,6 +93,7 @@ abstract class Entity extends AbstractController
 
         $entityId = $this->getEntityIdFromParams($params);
         $entity = $this->assertEntityExists($entityId);
+
         return $this->entityAddEdit($entity);
     }
 
@@ -131,6 +131,7 @@ abstract class Entity extends AbstractController
         $callback = [$unknownEntity, 'getEntityColumnLabel'];
         if (!is_callable($callback)) {
             $shortName = $entity->structure()->shortName;
+
             throw new \InvalidArgumentException("Entity {$shortName} does not implement {$callback[1]}");
         }
 
@@ -171,6 +172,7 @@ abstract class Entity extends AbstractController
         $callback = [$unknownEntity, 'getEntityLabel'];
         if (!is_callable($callback)) {
             $shortName = $entity->structure()->shortName;
+
             throw new \InvalidArgumentException("Entity {$shortName} does not implement {$callback[1]}");
         }
 
@@ -247,7 +249,7 @@ abstract class Entity extends AbstractController
                 continue;
             }
             $columnViewParamRef = &$viewParams['columns'][$columnName];
-            list ($relationTag, $relationTagOptions) = $this->entityAddEditRelationColumn(
+            list($relationTag, $relationTagOptions) = $this->entityAddEditRelationColumn(
                 $entity,
                 $columnViewParamRef['_structureData'],
                 $relationKey,
@@ -280,12 +282,14 @@ abstract class Entity extends AbstractController
                 /** @var \XF\Repository\Node $nodeRepo */
                 $nodeRepo = $entity->repository('XF:Node');
                 $tagOptions['choices'] = $nodeRepo->getNodeOptionsData(false, ['Forum']);
+
                 break;
             case 'XF:User':
                 $tag = 'username';
                 /** @var \XF\Entity\User|null $user */
                 $user = $entity->getRelation($relationKey);
                 $tagOptions['username'] = $user !== null ? $user->username : '';
+
                 break;
             default:
                 if (strpos($relation['entity'], $this->getPrefixForClasses()) === 0) {
@@ -366,15 +370,18 @@ abstract class Entity extends AbstractController
                     ]
                 ];
                 $columnFilter = 'bool';
+
                 break;
             case MvcEntity::INT:
                 $columnTag = 'number-box';
                 $columnFilter = 'int';
+
                 break;
             case MvcEntity::UINT:
                 $columnTag = 'number-box';
                 $columnTagOptions['min'] = 0;
                 $columnFilter = 'uint';
+
                 break;
             case MvcEntity::STR:
                 if (isset($column['allowedValues'])) {
@@ -408,6 +415,7 @@ abstract class Entity extends AbstractController
                     $columnTag = 'text-area';
                 }
                 $columnFilter = 'str';
+
                 break;
         }
 
@@ -766,6 +774,7 @@ abstract class Entity extends AbstractController
     {
         /** @var mixed $unknownFinder */
         $unknownFinder = $this->finder($this->getShortName());
+
         return is_callable([$unknownFinder, 'entityDoXfFilter']);
     }
 
@@ -887,7 +896,7 @@ abstract class Entity extends AbstractController
             $docComments[] = "/**\n * Run `xf-dev--entity-class-properties.sh {$entityClassAsArg}`\n */";
         }
 
-        $t = str_repeat(" ", 4);
+        $t = str_repeat(' ', 4);
         if ($this->supportsAdding() || $this->supportsEditing()) {
             try {
                 $this->getEntityColumnLabel($entity, __METHOD__);
@@ -904,6 +913,7 @@ abstract class Entity extends AbstractController
                 // ignore
             }
         }
+
         try {
             $this->getEntityLabel($entity);
         } catch (\InvalidArgumentException $e) {

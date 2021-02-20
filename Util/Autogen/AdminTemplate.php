@@ -2,9 +2,9 @@
 
 namespace DevHelper\Util\Autogen;
 
-use DevHelper\Util\AutogenContext;
 use XF\Entity\Template;
 use XF\PrintableException;
+use DevHelper\Util\AutogenContext;
 
 class AdminTemplate
 {
@@ -49,6 +49,7 @@ class AdminTemplate
             $newTemplate->save();
 
             $context->writeln("<info>Template #{$newTemplate->template_id} {$newTemplate->title} NEW</info>");
+
             return $newTemplate;
         }
 
@@ -57,12 +58,14 @@ class AdminTemplate
                 "<info>Template #{$templateTarget->template_id} {$templateTarget->title} OK</info>",
                 \Symfony\Component\Console\Output\OutputInterface::VERBOSITY_VERY_VERBOSE
             );
+
             return $templateTarget;
         } else {
             $templateTarget->template = $templateSource->template;
             $templateTarget->save();
 
             $context->writeln("<info>Template #{$templateTarget->template_id} {$templateTarget->title} UPDATED</info>");
+
             return $templateTarget;
         }
     }
