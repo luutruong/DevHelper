@@ -79,7 +79,7 @@
 			<xf:textarearow hint="{{ trim($hint) }}"
 							label="{$column.label}"
 							name="{$column.name}"
-							value="{{ $entity.get($columnName) }}"/>
+							value="{$column.value}"/>
 
 			<xf:elseif is="{$column.tag} === 'text-box'"/>
 			<xf:textboxrow label="{$column.label}"
