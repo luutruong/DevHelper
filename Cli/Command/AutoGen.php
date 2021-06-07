@@ -152,9 +152,18 @@ class AutoGen extends Command
             $entryFileName = $entry->getFilename();
             $entryClassName = substr($entryFileName, 0, -strlen($entryExtension) - 1);
             $controllerClasses[] = "{$controllerNamespace}\\{$entryClassName}";
+
+            $entryContents = file_get_contents($entry->getPathname());
+            if (!is_string($entryContents)) {
+                continue;
+            }
+
+            if (strpos($entryContents, $baseClass) !== false) {
+                $baseClassRefFound = true;
+            }
         }
 
-        if ($baseClassRefFound) {
+        if (!$baseClassRefFound) {
             return;
         }
 
