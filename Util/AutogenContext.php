@@ -106,6 +106,8 @@ class AutogenContext
     {
         $f = [$obj, 'devHelperAutogen'];
         if (!is_callable($f)) {
+            $this->writeln('devHelperAutogen not found in ' . get_class($obj) . '. Skipping...');
+
             return false;
         }
 
